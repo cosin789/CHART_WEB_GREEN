@@ -9,7 +9,7 @@ Papa.parse(sheetUrl, {
         
         // --- ส่วนที่ต้องแก้ไขให้ตรงกับชื่อหัวคอลัมน์ในไฟล์ของคุณ ---
         // เปลี่ยน 'Month' และ 'Sales' ให้เป็นชื่อคอลัมน์จริงๆ ใน Sheet ของคุณ
-        const labels = data.map(row => row['Temperature']); 
+        const labels = data.map(row => row['Date']); 
         const values = data.map(row => parseFloat(row['Humidity']));
         // ----------------------------------------------------
 
