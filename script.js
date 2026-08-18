@@ -17,7 +17,7 @@ async function loadChartData() {
             const cols = rows[i];
             if (cols.length >= 2) {
                 labels.push(cols[0].trim()); // คอลัมน์ที่ 1: วันที่ / เวลา (Labels)
-                values.push(parseFloat(cols[1].trim())); // คอลัมน์ที่ 2: ค่าตัวเลข (Data)
+                values.push(parseFloat(cols[2].trim())); // คอลัมน์ที่ 2: ค่าตัวเลข (Data)
             }
         }
 
