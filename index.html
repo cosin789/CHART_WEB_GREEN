@@ -139,7 +139,6 @@
     </style>
 </head>
 <body>
-
     <div class="dashboard-container">
         <!-- ส่วนหัวเว็บ -->
         <header>
@@ -152,10 +151,9 @@
             </div>
         </header>
 
-
-        <!-- ส่วนแสดงกราฟ -->
+        <!-- ส่วนแสดงกราฟและตัวกรอง -->
         <div class="grid-container">
-            <!-- Dropdown เลือกหน่วยงาน -->
+            <!-- Dropdown เลือกปีและหน่วยงาน -->
             <div>
                 <div style="margin-bottom: 15px; display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
                     <label for="yearSelect" style="font-size: 0.9rem; font-weight: 500; margin-right: 8px;">เลือกปีรายงาน:</label>
@@ -167,28 +165,16 @@
                         <option value="2021">2021</option>
                         <option value="2020">2020</option>
                     </select>
+                    
                     <label for="unitSelect" style="font-size: 0.9rem; font-weight: 500; margin-right: 8px;">เลือกหน่วยงาน:</label>
-                <select id="unitSelect" style="padding: 6px 12px; border-radius: 6px; border: 1px solid #cbd5e1; font-family: 'Prompt', sans-serif; font-size: 0.9rem; background: #fff; cursor: pointer;"></select>
-            </div>
-                
-            </div>
- 
-            <!-- กราฟแท่ง (Bar Chart) ภาพรวม -->
-            <!-- <div class="card">
-                <div class="card-header">
-                    <h2>กราฟแสดงแนวโน้มข้อมูล (Time Series Data)</h2>
+                    <select id="unitSelect" style="padding: 6px 12px; border-radius: 6px; border: 1px solid #cbd5e1; font-family: 'Prompt', sans-serif; font-size: 0.9rem; background: #fff; cursor: pointer;"></select>
                 </div>
-                <div class="chart-wrapper">
-                    <canvas id="myChart"></canvas>
-                </div>
-            </div> -->
+            </div>
 
             <!-- กราฟวงกลม/โดนัท (Doughnut Chart) รายละเอียด 7 หมวด -->
             <div class="card">
                 <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
                     <h2 id="pieTitle">สัดส่วนรายละเอียดรายหน่วยงาน</h2>
-                    
-
                 </div>
 
                 <!-- แผงแสดงสรุปคะแนน Overall และ Rating -->
@@ -233,6 +219,7 @@
                     </table>
                 </div>
 
+                <!-- กราฟโดนัทแสดงผล -->
                 <div class="chart-wrapper">
                     <canvas id="pieChart"></canvas>
                 </div>
