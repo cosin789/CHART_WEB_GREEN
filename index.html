@@ -148,12 +148,19 @@
                 <p>ระบบติดตามข้อมูลสภาพภูมิอากาศเมืองและพื้นที่สีเขียว (Real-time)</p>
             </div>
             <div class="status-badge">
-                <span class="status-dot"></span> ระบบออนไลน์ (Live)
+                <span class="status-dot"></span> ระบบอัพเดทตามช่วงเวลา
             </div>
         </header>
 
+
         <!-- ส่วนแสดงกราฟ -->
         <div class="grid-container">
+            <!-- Dropdown เลือกหน่วยงาน -->
+            <div>
+                <label for="unitSelect" style="font-size: 0.9rem; font-weight: 500; margin-right: 8px;">เลือกหน่วยงาน:</label>
+                <select id="unitSelect" style="padding: 6px 12px; border-radius: 6px; border: 1px solid #cbd5e1; font-family: 'Prompt', sans-serif; font-size: 0.9rem; background: #fff; cursor: pointer;"></select>
+            </div>
+            <!-- กราฟแท่ง (Bar Chart) ภาพรวม -->
             <div class="card">
                 <div class="card-header">
                     <h2>กราฟแสดงแนวโน้มข้อมูล (Time Series Data)</h2>
@@ -162,11 +169,62 @@
                     <canvas id="myChart"></canvas>
                 </div>
             </div>
-        </div>
 
-        
-        
-        
+            <!-- กราฟวงกลม/โดนัท (Doughnut Chart) รายละเอียด 7 หมวด -->
+            <div class="card">
+                <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                    <h2 id="pieTitle">สัดส่วนรายละเอียดรายหน่วยงาน</h2>
+                    
+
+                </div>
+
+                <!-- แผงแสดงสรุปคะแนน Overall และ Rating -->
+                <div style="display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap;">
+                    <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 10px 15px; border-radius: 8px; flex: 1; min-width: 150px;">
+                        <span style="font-size: 0.85rem; color: #64748b;">Overall Percentage:</span>
+                        <div id="overallScoreText" style="font-size: 1.2rem; font-weight: 600; color: #27ae60;">0.00%</div>
+                    </div>
+                    <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 10px 15px; border-radius: 8px; flex: 1; min-width: 150px;">
+                        <span style="font-size: 0.85rem; color: #64748b;">Rating Ranking:</span>
+                        <div>
+                            <span id="ratingBadge" style="display: inline-block; padding: 2px 10px; border-radius: 12px; color: #fff; font-size: 0.85rem; font-weight: 500; background: #94a3b8;">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ตารางแสดงคะแนนย่อยทั้ง 7 หมวด -->
+                <div style="margin-bottom: 20px; overflow-x: auto;">
+                    <table id="summaryTable" style="width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: center;">
+                        <thead>
+                            <tr style="background-color: #f1f5f9; color: #2c3e50;">
+                                <th style="padding: 6px; border: 1px solid #e2e8f0;">หมวด 1 (องค์กร)</th>
+                                <th style="padding: 6px; border: 1px solid #e2e8f0;">หมวด 2 (วัตถุดิบ)</th>
+                                <th style="padding: 6px; border: 1px solid #e2e8f0;">หมวด 3 (พลังงาน)</th>
+                                <th style="padding: 6px; border: 1px solid #e2e8f0;">หมวด 4 (น้ำ)</th>
+                                <th style="padding: 6px; border: 1px solid #e2e8f0;">หมวด 5 (กากของเสีย)</th>
+                                <th style="padding: 6px; border: 1px solid #e2e8f0;">หมวด 6 (อาคาร)</th>
+                                <th style="padding: 6px; border: 1px solid #e2e8f0;">หมวด 7 (ก๊าซฯ)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td id="score1" style="padding: 6px; border: 1px solid #e2e8f0; font-weight: 600; color: #27ae60;">-</td>
+                                <td id="score2" style="padding: 6px; border: 1px solid #e2e8f0; font-weight: 600; color: #3498db;">-</td>
+                                <td id="score3" style="padding: 6px; border: 1px solid #e2e8f0; font-weight: 600; color: #f1c40f;">-</td>
+                                <td id="score4" style="padding: 6px; border: 1px solid #e2e8f0; font-weight: 600; color: #e74c3c;">-</td>
+                                <td id="score5" style="padding: 6px; border: 1px solid #e2e8f0; font-weight: 600; color: #9b59b6;">-</td>
+                                <td id="score6" style="padding: 6px; border: 1px solid #e2e8f0; font-weight: 600; color: #e67e22;">-</td>
+                                <td id="score7" style="padding: 6px; border: 1px solid #e2e8f0; font-weight: 600; color: #1abc9c;">-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="chart-wrapper">
+                    <canvas id="pieChart"></canvas>
+                </div>
+            </div>
+        </div>
 
         <footer>
             <p>© 2026 Urban Climate & GIS Research Unit | Powered by GitHub Pages</p>
