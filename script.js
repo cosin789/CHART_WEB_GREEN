@@ -10,7 +10,7 @@ async function loadCharts(selectedYear = "2025") {
         }
         
         // ใช้ URL พร้อมพารามิเตอร์ปี
-        const baseUrl = 'https://script.google.com/macros/s/AKfycby9s_Ei3U0yTFAB_YX3F0M4RwJ3yfgrndje7a9fsTzMesWij5TRzH05JG5HyBIm-Eqe/exec'; 
+        const baseUrl = 'https://script.google.com/macros/s/AKfycbxN3b8bPm3KmT19EwgLkEo_zHb_ZHUvFJ7VHSHy0akmjr8xJcNXi6W4A3aSt1Xj-iWx/exec'; 
         const apiUrl = `${baseUrl}?year=${selectedYear}&token=${myToken}`;
 
         const response = await fetch(apiUrl);
