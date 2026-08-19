@@ -157,9 +157,22 @@
         <div class="grid-container">
             <!-- Dropdown เลือกหน่วยงาน -->
             <div>
-                <label for="unitSelect" style="font-size: 0.9rem; font-weight: 500; margin-right: 8px;">เลือกหน่วยงาน:</label>
+                <div style="margin-bottom: 15px; display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+                    <label for="yearSelect" style="font-size: 0.9rem; font-weight: 500; margin-right: 8px;">เลือกปีรายงาน:</label>
+                    <select id="yearSelect" style="padding: 6px 12px; border-radius: 6px; border: 1px solid #cbd5e1; font-family: 'Prompt', sans-serif; font-size: 0.9rem; background: #fff; cursor: pointer;">
+                        <option value="2025">2025</option>
+                        <option value="2024">2024</option>
+                        <option value="2023">2023</option>
+                        <option value="2022">2022</option>
+                        <option value="2021">2021</option>
+                        <option value="2020">2020</option>
+                    </select>
+                    <label for="unitSelect" style="font-size: 0.9rem; font-weight: 500; margin-right: 8px;">เลือกหน่วยงาน:</label>
                 <select id="unitSelect" style="padding: 6px 12px; border-radius: 6px; border: 1px solid #cbd5e1; font-family: 'Prompt', sans-serif; font-size: 0.9rem; background: #fff; cursor: pointer;"></select>
             </div>
+                
+            </div>
+ 
             <!-- กราฟแท่ง (Bar Chart) ภาพรวม -->
             <div class="card">
                 <div class="card-header">
