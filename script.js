@@ -1,80 +1,87 @@
 async function loadChartData() {
     try {
-        // ลิงก์ CSV จาก Google Sheets ของคุณ
-        const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRnf4qJl5c9iAdJhTdatJ1gbuoRvJfQt7oYN9QglFBkveQegTKRpPQmC5QyRvNZMQ/pub?output=csv';
+        // 🔒 ใช้ Web App URL ที่ลงท้ายด้วย /exec ของคุณ
+        const apiUrl = 'https://script.google.com/macros/s/AKfycbzBv0lrEBrCue3bH-KH9QraTco99TS5zNjX8NxD-a1E5Q1R3PlqvMFlcyokl6lzRdrP/exec'; 
         
-        const response = await fetch(csvUrl);
-        const csvText = await response.text();
+        const response = await fetch(apiUrl);
+        const result = await response.json();
 
-        // แปลงข้อความ CSV เป็นแถว (Rows)
-        const rows = csvText.trim().split('\n').map(row => row.split(','));
-        
-        const labels = [];
-        const values = [];
+        if (result.status === "success" && Array.isArray(result.data)) {
+            const rawData = result.data;
+            
+            const labels = [];
+            const values = [];
 
-        // วนลูปอ่านข้อมูลเริ่มจากแถวที่ 2 (ข้าม Header แถวแรก)
-        for (let i = 1; i < rows.length; i++) {
-            const cols = rows[i];
-            if (cols.length >= 2) {
-                labels.push(cols[0].trim()); // คอลัมน์ที่ 1: วันที่ / เวลา (Labels)
-                values.push(parseFloat(cols[2].trim())); // คอลัมน์ที่ 2: ค่าตัวเลข (Data)
+            // วนลูปหยิบ label (Column C) และ value (Column K) มาใส่กราฟโดยตรง
+            rawData.forEach(item => {
+                labels.push(item.label);
+                // แปลงค่า value เป็นตัวเลข (ถ้าช่องไหนว่างหรือพัง ให้เป็น 0)
+                values.push(parseFloat(item.value) || 0); 
+            });
+
+            const canvasElement = document.getElementById('myChart');
+            if (!canvasElement) return;
+
+            const ctx = canvasElement.getContext('2d');
+            
+            // ล้างกราฟเก่าทิ้งก่อนวาดใหม่ (ป้องกันกราฟซ้อนทับกัน)
+            if (window.myChartInstance instanceof Chart) {
+                window.myChartInstance.destroy();
             }
-        }
 
-        // สร้างกราฟแท่งลงบน Canvas
-        const ctx = document.getElementById('myChart').getContext('2d');
-        
-        new Chart(ctx, {
-            type: 'bar', // เปลี่ยนประเภทกราฟเป็น Bar Chart
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'ข้อมูล Time Series (กราฟแท่ง)',
-                    data: values,
-                    backgroundColor: 'rgba(39, 174, 96, 0.75)', // สีเขียวโปร่งแสงสวยงาม
-                    borderColor: '#27ae60', // ขอบแท่งกราฟ
-                    borderWidth: 1.5,
-                    borderRadius: 6, // ทำมุมขอบบนของแท่งกราฟให้โค้งมนดูพรีเมียม
-                    borderSkipped: false,
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: true,
-                        position: 'top',
-                        labels: {
-                            font: { family: 'Prompt', size: 13 },
-                            color: '#2c3e50'
+            // สร้างกราฟแท่ง (Bar Chart)
+            window.myChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'ข้อมูลสรุปประจำปี 2025',
+                        data: values,
+                        backgroundColor: 'rgba(39, 174, 96, 0.75)',
+                        borderColor: '#27ae60',
+                        borderWidth: 1.5,
+                        borderRadius: 6,
+                        borderSkipped: false,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                            labels: {
+                                font: { family: 'Prompt', size: 13 },
+                                color: '#2c3e50'
+                            }
                         }
                     },
-                    tooltip: {
-                        backgroundColor: 'rgba(44, 62, 80, 0.9)',
-                        titleFont: { family: 'Prompt', size: 14 },
-                        bodyFont: { family: 'Prompt', size: 13 },
-                        padding: 12,
-                        cornerRadius: 8
-                    }
-                },
-                scales: {
-                    x: {
-                        grid: { display: false }, // ปิดเส้นตารางแนวตั้งเพื่อให้ดูสะอาด
-                        ticks: { font: { family: 'Prompt', size: 12 }, color: '#7f8c8d' }
-                    },
-                    y: {
-                        grid: { color: '#edf2f7' }, // เส้นตารางแนวนอนแบบบางๆ
-                        ticks: { font: { family: 'Prompt', size: 12 }, color: '#7f8c8d' }
+                    scales: {
+                        x: {
+                            grid: { display: false },
+                            ticks: { 
+                                font: { family: 'Prompt', size: 12 },
+                                color: '#7f8c8d',
+                                autoSkip: false,
+                                maxRotation: 45,
+                                minRotation: 0
+                            },
+                            offset: true
+                        },
+                        y: {
+                            grid: { color: '#edf2f7' },
+                            ticks: { font: { family: 'Prompt', size: 12 }, color: '#7f8c8d' },
+                            beginAtZero: true
+                        }
                     }
                 }
-            }
-        });
-
+            });
+        }
     } catch (error) {
-        console.error('เกิดข้อผิดพลาดในการโหลดข้อมูล CSV:', error);
+        console.error('เกิดข้อผิดพลาดในการดึงข้อมูลผ่าน API:', error);
     }
 }
 
-// เรียกใช้งานฟังก์ชันโหลดข้อมูลทันทีที่เปิดเว็บ
+// เรียกใช้งานฟังก์ชัน
 loadChartData();
